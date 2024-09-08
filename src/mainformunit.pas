@@ -9,12 +9,15 @@ uses
   StdCtrls, ExtCtrls, Menus, Windows, fpExprPars, lazutf8;
 
 type
+
+  { TMainForm }
+
   TMainForm = class(TForm)
     ExitMenuItem: TMenuItem;
     ImageList16px: TImageList;
+    ResultMemo: TMemo;
     ShowHideMenuItem: TMenuItem;
     TrayPopupMenu: TPopupMenu;
-    ResultEdit: TEdit;
     QueryEdit: TEditButton;
     TrayIcon: TTrayIcon;
     procedure ExitMenuItemClick(Sender: TObject);
@@ -55,7 +58,7 @@ var
   parserResult: TFPExpressionResult;
 begin
   if length(QueryEdit.Text) = 0 then begin
-    ResultEdit.Text := '0,00';
+    ResultMemo.Text := '';
     exit;
   end;
 
@@ -68,10 +71,10 @@ begin
     parser.BuiltIns := [bcMath];
     parser.Expression := UTF8StringReplace(QueryEdit.Text,',','.',[rfReplaceAll]);
     parserResult := parser.Evaluate;
-    ResultEdit.Text := formatfloat('0.00', ArgToFloat(parserResult));
+    ResultMemo.Text := formatfloat('0.00', ArgToFloat(parserResult));
   except
     on E: Exception do
-      ResultEdit.Text := E.Message;
+      ResultMemo.Text := E.Message;
   end;
   parser.Free;
 end;
@@ -79,7 +82,7 @@ end;
 procedure TMainForm.QueryEditKeyPress(Sender: TObject; var Key: char);
 begin
   if Key = #13 then
-    QueryEdit.Text := ResultEdit.Text;
+    QueryEdit.Text := ResultMemo.Text;
 end;
 
 procedure TMainForm.ShowHideMenuItemClick(Sender: TObject);
