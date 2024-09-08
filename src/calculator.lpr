@@ -8,6 +8,7 @@ uses
 {$R *.res}
 
 begin
+  Application.Scaled:=True;
   Application.Title:='Калькулятор';
   RequireDerivedFormResource := True;
   Application.Initialize;
