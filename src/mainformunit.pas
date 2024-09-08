@@ -106,7 +106,7 @@ end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
 begin
-  FormatSettings.DecimalSeparator := ',';
+  FormatSettings.DecimalSeparator := '.';
   MainForm.Left := Screen.Width - MainForm.Width - 16;
   MainForm.Top := Screen.Height - MainForm.Height - 64;
   AssociateHotkeys(Handle);
